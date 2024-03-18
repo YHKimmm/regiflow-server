@@ -1,15 +1,14 @@
-require('dotenv').config()
-
-const express = require('express');
-const path = require("path");
-
+const express = require("express");
+const userRoutes = require('./users/routes/routes.js');
 
 const app = express();
-const PORT = process.env.PORT;
+const PORT = 8080;
 
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+require('./elephantsql');
 
-app.get('*', (req, res) =>
-    res.sendFile(path.join(__dirname, 'dist/index.html'))
-);
+app.use('/api/user', userRoutes);
+
+app.listen(PORT, () => {
+    console.log(`listening on port ${PORT}`);
+});
